@@ -27,6 +27,7 @@ type CanonicalJsonValidator struct {
 	Schema   string
 }
 
+//THIS MAY BE PART OF THE SCHEMA, CAUSE IS THE VALIDATION CAPABILITY
 func newCanonicalJsonValidator() *CanonicalJsonValidator {
 	schema := server.InitializeCanonicalSchema()
 	return &CanonicalJsonValidator{

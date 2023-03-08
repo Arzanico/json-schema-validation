@@ -16,7 +16,8 @@ type CanonicalSchema struct {
 }
 
 func InitializeCanonicalSchema() *CanonicalSchema {
-	//for now version will be hardcoded
+	//Version refers to the schema file that will be loaded.
+	//For now, version will be hardcoded, in future it could be a parameter
 	version := "schemas/example.json"
 	data, err := schemas.ReadFile(version)
 	tkt.CheckErr(err)
@@ -30,5 +31,4 @@ func InitializeCanonicalSchema() *CanonicalSchema {
 		Version: version,
 		Schema:  schema,
 	}
-
 }
