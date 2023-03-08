@@ -1,8 +1,6 @@
 package server
 
 import (
-	"bytes"
-	"encoding/json"
 	"fmt"
 	"github.com/gorilla/mux"
 	"github.com/xeipuuv/gojsonschema"
@@ -24,7 +22,7 @@ func NewHttpServer(addr string) *http.Server {
 
 type CanonicalJsonValidator struct {
 	Document *string
-	Schema   string
+	Schema   []byte
 }
 
 //THIS MAY BE PART OF THE SCHEMA, CAUSE IS THE VALIDATION CAPABILITY
@@ -42,14 +40,16 @@ func (v *CanonicalJsonValidator) validate(w http.ResponseWriter, r *http.Request
 		panic(err)
 	}
 
-	buf := bytes.Buffer{}
-	err = json.Compact(&buf, data)
-	tkt.CheckErr(err)
+	//buf := bytes.Buffer{}
+	//err = json.Compact(&buf, data)
+	//tkt.CheckErr(err)
 
-	jsonDoc := buf.String()
+	//jsonDoc := buf.String()
 
-	schemaLoader := gojsonschema.NewStringLoader(v.Schema)
-	documentLoader := gojsonschema.NewStringLoader(jsonDoc)
+	//schemaLoader := gojsonschema.NewStringLoader(v.Schema)
+	//documentLoader := gojsonschema.NewStringLoader(jsonDoc)
+	schemaLoader := gojsonschema.NewBytesLoader(v.Schema)
+	documentLoader := gojsonschema.NewBytesLoader(data)
 
 	schema, err := gojsonschema.NewSchema(schemaLoader)
 	if err != nil {
